@@ -12,12 +12,16 @@ clean:
 configure: install
     @cmake --preset=vcpkg
 
-debug: clean configure
+debug: configure
     @cmake --build {{build_dir}}
 
-release: clean
+release:
     @cmake --preset=vcpkg -DCMAKE_BUILD_TYPE=Release
     @cmake --build {{build_dir}}
 
 install:
+    @if [ ! -d "vcpkg_installed" ]; then vcpkg install; fi
+
+re-install:
     @vcpkg install
+
